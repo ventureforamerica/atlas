@@ -1,0 +1,119 @@
+<head>
+  <title>VFA Atlas</title>
+</head>
+
+<body class="row">
+<div class="small-3 columns" id="selectors" data-magellan-expedition="fixed">
+  <div class="row">
+    <div class="small-12 columns" id="selectors-nav">
+      <dl class="tabs" data-tab>
+        <dd class="tab-title active"><a href="#fellow-panel" id="fellows-tab">Fellows</a></dd>
+        <dd class="tab-title"><a href="#company-panel" id="companies-tab">Companies</a></dd>
+        <dd class="tab-title"><a href="#funding-panel" id="funding-tab">Funding</a></dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="row tabs-content">
+
+    <div class="content active" id="fellow-panel">
+      <form id="fellow-selectors">
+        <div class="row">
+          <div class="small-12 columns">
+            <select name="fellowYear">
+              <option value="">Year</option>
+              <option value="2014">2014</option>
+              <option value="2015">2015</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-12 columns">
+            <!--<select name="selector-1">-->
+            <!--<option value="">City</option>-->
+            <!--</select>-->
+          </div>
+        </div>
+      </form>
+    </div><!-- /#fellow-panel -->
+
+    <div class="content" id="company-panel">
+      <form id="company-selectors">
+        <div class="row">
+          <div class="small-12 columns">
+            <!--<select name="selector-1">-->
+            <!--<option value="">Industry</option>-->
+            <!--</select>-->
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-12 columns">
+            <select name="city">
+              <option value="">City</option>
+              <option value="Baltimore">Baltimore</option>
+              <option value="Birmingham">Birmingham</option>
+              <option value="Charlotte">Charlotte</option>
+              <option value="Cincinnati">Cincinnati</option>
+              <option value="Cleveland">Cleveland</option>
+              <option value="Columbus">Columbus</option>
+              <option value="Denver">Denver</option>
+              <option value="Detroit">Detroit</option>
+              <option value="Indianapolis">Indianapolis</option>
+              <option value="Nashville">Nashville</option>
+              <option value="Pittsburgh">Pittsburgh</option>
+              <option value="Las Vegas">Las Vegas</option>
+              <option value="Miami">Miami</option>
+              <option value="New Orleans">New Orleans</option>
+              <option value="Philadelphia">Philadelphia</option>
+              <option value="Providence">Providence</option>
+              <option value="San Antonio">San Antonio</option>
+              <option value="St. Louis">St. Louis</option>
+            </select>
+          </div>
+        </div>
+      </form>
+    </div><!-- /#company-panel -->
+
+    <div class="content" id="funding-panel">
+      <form id="funding-selectors">
+        <div class="row">
+          <div class="small-12 columns">
+            <select name="selector-1">
+              <option value="">???</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-12 columns">
+            <select name="selector-1">
+              <option value="">!!!</option>
+            </select>
+          </div>
+        </div>
+      </form>
+    </div><!-- /#funding-panel -->
+
+  </div><!-- /#tabs-content -->
+</div><!-- /#selectors -->
+
+<div class="small-9 columns" id="map-search-results">
+  <div class="row">
+    <div class="small-12 columns" id="map"></div>
+  </div>
+  <!--<div class="row" id="search">-->
+    <!--<div class="small-10 columns">-->
+      <!--<input type="text" name="search" id="search-input" placeholder="Search">-->
+    <!--</div>-->
+    <!--<div class="small-2 columns">-->
+      <!--<a href="#" class="button postfix" id="search-button">Search</a>-->
+    <!--</div>-->
+  <!--</div>-->
+  <div class="row" id="results">
+    <div class="small-12 columns">
+      {{> fellowsList}}
+      {{> companiesList}}
+    </div>
+  </div>
+</div>
+
+</body>

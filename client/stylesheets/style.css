@@ -1,0 +1,43 @@
+body {
+  margin-top: 20px !important;
+}
+
+#selectors {
+  height: 700px;
+  border: 1px solid black;
+}
+#selectors-nav {
+  padding-left: 0;
+  padding-right: 0;
+}
+#selectors dl dd a {
+  padding: 3px 9px;
+}
+
+#selectors[data-magellan-expedition], #selectors[data-magellan-expedition-clone] {
+  min-width: 250px;
+  width: 250px;
+  left: inherit;
+  padding: 0 15px;
+}
+#selectors[data-magellan-expedition] {
+  top: 20px !important;
+}
+#selectors[data-magellan-expedition-clone] {
+  visibility: hidden;
+}
+
+#map {
+  height: 500px;
+}
+#results {
+  overflow-x: auto;
+}
+
+.fellow.row, .company.row {
+  border: 1px solid blue;
+  margin-bottom: 5px;
+}
+.summary {
+  border-left: 1px solid blue;
+}
