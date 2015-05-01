@@ -1,11 +1,12 @@
 <template name="company">
   <div class="row company" id="company-{{id}}">
-    <div class="small-2 columns image"><img src="http://placehold.it/200"></div>
-    <div class="small-2 columns info">{{name}}</div>
-    <div class="small-8 columns summary">SUMMARY:
-        url: {{url}},
-        bio: {{bio}},
-        city: {{city}},
+    <div class="small-2 columns image"><img src="http://match.ventureforamerica.org{{logoPath}}"></div>
+    <div class="small-2 columns info">
+      <a href="{{url}}">{{name}}</a><br>
+      {{city}}
+    </div>
+    <div class="small-8 columns summary">
+      {{bio}}
     </div>
   </div>
 </template>

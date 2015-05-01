@@ -2,9 +2,9 @@ Meteor.subscribe('fellows');
 Meteor.subscribe('companies');
 
 Template.body.created = function() {
-  Session.set('activeParamsKey', 'fellowParams');
-  Session.set('fellowParams', JSON.stringify({}));
-  Session.set('companyParams', JSON.stringify({}));
+  Session.set('activeParamsKey', 'fellowsParams');
+  Session.set('fellowsParams', JSON.stringify({}));
+  Session.set('companiesParams', JSON.stringify({}));
 
   $(document).ready(function() {
     var citiesToCoords = {
