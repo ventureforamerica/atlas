@@ -1,8 +1,8 @@
 <template name="citySelector">
 <select name="city">
-  <option name="">City</option>
+  <option value="">City</option>
   {{#each cities}}
-  <option name="{{.}}">{{.}}</option>
+  <option value="{{.}}">{{.}}</option>
   {{/each}}
 </select>
 </template>
