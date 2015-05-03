@@ -1,0 +1,8 @@
+<template name="citySelector">
+<select name="city">
+  <option name="">City</option>
+  {{#each cities}}
+  <option name="{{.}}">{{.}}</option>
+  {{/each}}
+</select>
+</template>
