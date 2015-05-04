@@ -9,6 +9,14 @@ function publishAPIData(collectionName) {
 
       var response = HTTP.get(url, {params: params});
       _.each(response.data, function (model) {
+        var allText = '';
+        for (var key in model) {
+          var value = model[key];
+          if (value !== null && value !== undefined) {
+            allText += value.toLowerCase();
+          }
+        }
+        model['allText'] = allText;
         self.added(collectionName, model.id, model);
         self.ready();
       });

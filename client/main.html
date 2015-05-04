@@ -80,14 +80,16 @@
   <div class="row">
     <div class="small-12 columns" id="map"></div>
   </div>
-  <!--<div class="row" id="search">-->
-    <!--<div class="small-10 columns">-->
-      <!--<input type="text" name="search" id="search-input" placeholder="Search">-->
-    <!--</div>-->
-    <!--<div class="small-2 columns">-->
-      <!--<a href="#" class="button postfix" id="search-button">Search</a>-->
-    <!--</div>-->
-  <!--</div>-->
+  <div class="row" id="search">
+    <form id="search">
+      <div class="small-10 columns">
+        <input type="text" name="search" id="search-input" placeholder="Search">
+      </div>
+      <div class="small-2 columns">
+        <button class="button postfix">Search</button>
+      </div>
+    </form>
+  </div>
   <div class="row" id="results">
     <div class="small-12 columns">
       {{> fellowsList}}

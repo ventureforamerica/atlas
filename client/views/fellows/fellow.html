@@ -4,13 +4,16 @@
   <div class="small-3 columns info">
     {{firstName}} {{lastName}}<br>
     {{fellowYear}} Fellow<br>
-    {{city}}<br>
+    {{#if companyName}}
+      {{companyName}}, {{city}}<br>
+    {{/if}}
     {{school}} {{graduationYear}}<br>
   </div>
   <div class="small-7 columns summary">SUMMARY:
-      major: {{major}},
-      degree: {{degree}},
-      hometown: {{hometown}}
+    major: {{major}},
+    degree: {{degree}},
+    hometown: {{hometown}},
+    allText: {{allText}}
   </div>
 </div>
 </template>

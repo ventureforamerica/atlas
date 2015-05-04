@@ -1,13 +1,15 @@
 Meteor.subscribe('fellows');
 Meteor.subscribe('companies');
 
+var map;
+var citiesToCoords;
 Template.body.created = function() {
   Session.set('activeParamsKey', 'fellowsParams');
   Session.set('fellowsParams', JSON.stringify({}));
   Session.set('companiesParams', JSON.stringify({}));
 
   $(document).ready(function() {
-    var citiesToCoords = {
+    citiesToCoords = {
       Baltimore: {latitude: 39.17, longitude: -76.61},
       Birmingham: {latitude: 33.52, longitude: -86.81}, //
       Charlotte: {latitude: 35.22, longitude: -80.84}, //
@@ -67,8 +69,8 @@ Template.body.created = function() {
     var mapData = {};
     $.each(vfaStates, function(i, state) { mapData[state] = {fillKey: 'VFA'}; });
 
-    var map = new Datamap({
-      element: document.getElementById('map'),
+    map = new Datamap({
+      element: $('#map')[0],
       scope: 'usa',
       fills: {
         VFA: 'blue',
@@ -109,10 +111,19 @@ Template.body.events({
   'change select': function(e) {
     addToJSONParams(e.target.name, e.target.value);
   },
-  'click #search-button': function(e) {
+  //'change select[name="city"]': function(e) {
+  //  var city = e.target.value;
+  //  map.bubbles([{
+  //    name: city,
+  //    latitude: citiesToCoords[city].latitude,
+  //    longitude: citiesToCoords[city].longitude,
+  //    radius: 20,
+  //  }]);
+  //},
+  'submit #search': function(e) {
     e.preventDefault();
+    var query = $('#search-input').val().toLowerCase();
 
-    //addToJSONParams('query', $('#search-input').val());
-    //addToJSONParams('$text', {$search: $('#search-input').val()});
-  }
+    addToJSONParams('allText', {$regex: query});
+  },
 });
