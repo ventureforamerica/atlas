@@ -9,14 +9,7 @@ function publishAPIData(collectionName) {
 
       var response = HTTP.get(url, {params: params});
       _.each(response.data, function (model) {
-        var allText = '';
-        for (var key in model) {
-          var value = model[key];
-          if (value !== null && value !== undefined) {
-            allText += value.toLowerCase();
-          }
-        }
-        model['allText'] = allText;
+        model['allText'] = JSON.stringify(model).toLowerCase();
         self.added(collectionName, model.id, model);
         self.ready();
       });
@@ -30,3 +23,4 @@ function publishAPIData(collectionName) {
 
 publishAPIData('fellows');
 publishAPIData('companies');
+publishAPIData('cities');

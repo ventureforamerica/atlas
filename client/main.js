@@ -1,89 +1,15 @@
 Meteor.subscribe('fellows');
 Meteor.subscribe('companies');
+Meteor.subscribe('cities');
 
-var map;
-var citiesToCoords;
 Template.body.created = function() {
   Session.set('activeParamsKey', 'fellowsParams');
   Session.set('fellowsParams', JSON.stringify({}));
   Session.set('companiesParams', JSON.stringify({}));
-
-  $(document).ready(function() {
-    citiesToCoords = {
-      Baltimore: {latitude: 39.17, longitude: -76.61},
-      Birmingham: {latitude: 33.52, longitude: -86.81}, //
-      Charlotte: {latitude: 35.22, longitude: -80.84}, //
-      Cincinnati: {latitude: 39.10, longitude: -84.51},
-      Cleveland: {latitude: 41.48, longitude: -81.66},
-      Columbus: {latitude: 39.98, longitude: -82.98},
-      Denver: {latitude: 39.73, longitude: -104.99}, //
-      Detroit: {latitude: 42.33, longitude: -83.04},
-      Indianapolis: {latitude: 39.79, longitude: -86.14}, //
-      Nashville: {latitude: 36.16, longitude: -86.78}, //
-      Pittsburgh: {latitude: 40.43, longitude: -79.97}, //
-      'Las Vegas': {latitude: 36.12, longitude: -115.17}, //
-      Miami: {latitude: 25.77, longitude: -80.20},
-      'New Orleans': {latitude: 29.95, longitude: -90.06},
-      Philadelphia: {latitude: 39.95, longitude: -75.16},
-      Providence: {latitude: 41.82, longitude: -71.42},
-      'San Antonio': {latitude: 29.41, longitude: -98.50},
-      'St. Louis': {latitude: 38.67, longitude: -90.19},
-    };
-    var newCities = [
-      'Birmingham',
-      'Charlotte',
-      'Denver',
-      'Indianapolis',
-      'Nashville',
-      'Pittsburgh',
-    ];
-
-    var bubbleData = [];
-    for (var city in citiesToCoords) {
-      var radius = ($.inArray(city, newCities) > 0 || city == 'Las Vegas') ? 2 : 10;
-      bubbleData.push({
-        name: city,
-        latitude: citiesToCoords[city].latitude,
-        longitude: citiesToCoords[city].longitude,
-        radius: radius,
-      });
-    }
-
-    var vfaStates = [
-      'AL',
-      'CO',
-      'FL',
-      'IN',
-      'LA',
-      'MD',
-      'MI',
-      'MO',
-      'NC',
-      'NV',
-      'OH',
-      'PA',
-      'RI',
-      'TN',
-      'TX',
-    ];
-    var mapData = {};
-    $.each(vfaStates, function(i, state) { mapData[state] = {fillKey: 'VFA'}; });
-
-    map = new Datamap({
-      element: $('#map')[0],
-      scope: 'usa',
-      fills: {
-        VFA: 'blue',
-        defaultFill: 'lightgray'
-      },
-      data: mapData
-    });
-    map.bubbles(bubbleData);
-  });
 };
 
 function addToJSONParams(key, value) {
-  var activeParamsKey = Session.get('activeParamsKey');
+  var activeParamsKey = Session.get('activeParamsKey') + 'Params';
   var sessionParams = JSON.parse(Session.get(activeParamsKey));
 
   if (value) {
@@ -94,8 +20,7 @@ function addToJSONParams(key, value) {
   }
 
   Session.set(activeParamsKey, JSON.stringify(sessionParams));
-  console.log('set ' + activeParamsKey + ' to ');
-  console.log(JSON.parse(Session.get(activeParamsKey)));
+  console.log('set ' + activeParamsKey + ' to ', JSON.parse(Session.get(activeParamsKey)));
 }
 
 Template.body.events({
