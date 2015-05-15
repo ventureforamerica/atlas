@@ -9,7 +9,7 @@ Template.body.created = function() {
 };
 
 function addToJSONParams(key, value) {
-  var activeParamsKey = Session.get('activeParamsKey') + 'Params';
+  var activeParamsKey = Session.get('activeParamsKey');
   var sessionParams = JSON.parse(Session.get(activeParamsKey));
 
   if (value) {

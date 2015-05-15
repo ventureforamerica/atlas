@@ -52,16 +52,19 @@ Tracker.autorun(function() {
     });
   });
 
-  if (map) map.bubbles(bubbleData, {
-    popupTemplate: function(geo, data) {
-      return '<div class="hoverinfo">' +
-        '<h3>' + data.name + '<h3>' +
-        '<p>Companies: ' + data.companyCount + '<br>Opportunities:' + data.opportunityCount + '</p>' +
-        '<p>Fellows:' + data.fellowText + '</p>' +
-        '<p>Radius by ' + data.radiusBy + ': ' + data.radius + '</p>' +
-      '</div>';
-    }
-  });
+  if (map) {
+    map.bubbles(bubbleData, {
+      popupTemplate: function(geo, data) {
+        return '' +
+          '<div class="hoverinfo">' +
+            '<h3>' + data.name + '<h3>' +
+            '<p>Companies: ' + data.companyCount + '<br>Opportunities:' + data.opportunityCount + '</p>' +
+            '<p>Fellows:' + data.fellowText + '</p>' +
+            '<p>Radius by ' + data.radiusBy + ': ' + data.radius + '</p>' +
+          '</div>';
+      }
+    });
+  }
 });
 
 Template.map.onRendered(function() {
