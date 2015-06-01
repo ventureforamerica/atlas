@@ -2,6 +2,7 @@ Cities = new Mongo.Collection('cities');
 var map;
 
 Tracker.autorun(function() {
+  var activeParams = JSON.parse(Session.get(Session.get('activeParamsKey')));
   var citiesToCoords = {
     Baltimore: {latitude: 39.17, longitude: -76.61},
     Birmingham: {latitude: 33.52, longitude: -86.81, isNew: true},
@@ -39,16 +40,16 @@ Tracker.autorun(function() {
       }
     }
 
-    var radius = Session.get('activeParamsKey') === 'fellowsParams' ? fellowCount : city.companyCount;
+    var radius = activeParams.currentTab === 'Fellows' ? fellowCount : city.companyCount;
     radius = radius ? Math.floor(radius / 2) + 1 : ((citiesToCoords[name].isNew || name == 'Las Vegas') ? 1 : 5);
-    var radiusBy = radius != 0 ? Session.get('activeParamsKey') : 'default';
+    var radiusBy = radius != 0 ? activeParams.currentTab : 'default';
 
     bubbleData.push({
       name: name,
       latitude: citiesToCoords[name].latitude,
       longitude: citiesToCoords[name].longitude,
       radius: radius,
-      fillKey: Session.get('highlightedCity') === name ? 'selected' : 'defaultFill',
+      fillKey: activeParams.hasOwnProperty('city') && activeParams.city === name ? 'selected' : 'defaultFill',
       companyCount: city.companyCount,
       fellowText: fellowText,
       radiusBy: radiusBy,
@@ -89,10 +90,4 @@ Template.map.onRendered(function() {
     },
     data: mapData
   });
-});
-
-Template.citySelector.events({
-  'change select[name="city"]': function(e) {
-    Session.set('highlightedCity', e.target.value);
-  },
 });
