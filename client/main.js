@@ -4,8 +4,9 @@ Meteor.subscribe('cities');
 
 Template.body.created = function() {
   Session.set('activeParamsKey', 'fellowsParams');
-  Session.set('fellowsParams', JSON.stringify({}));
-  Session.set('companiesParams', JSON.stringify({}));
+  Session.set('highlightedCity', '');
+  Session.set('fellowsParams', JSON.stringify({currentTab: 'Fellows'}));
+  Session.set('companiesParams', JSON.stringify({currentTab: 'Companies'}));
 };
 
 function addToJSONParams(key, value) {
@@ -36,19 +37,29 @@ Template.body.events({
   'change select': function(e) {
     addToJSONParams(e.target.name, e.target.value);
   },
-  //'change select[name="city"]': function(e) {
-  //  var city = e.target.value;
-  //  map.bubbles([{
-  //    name: city,
-  //    latitude: citiesToCoords[city].latitude,
-  //    longitude: citiesToCoords[city].longitude,
-  //    radius: 20,
-  //  }]);
-  //},
   'submit #search': function(e) {
     e.preventDefault();
     var query = $('#search-input').val().toLowerCase();
 
     addToJSONParams('allText', {$regex: query});
   },
+});
+
+Template.body.helpers({
+  resultsTitle: function() {
+    var params = JSON.parse(Session.get(Session.get('activeParamsKey')));
+    var resultsTitleString = 'Query = ';
+
+    for (var key in params) {
+      if (params.hasOwnProperty(key)) {
+        resultsTitleString += params[key] + ' ';
+      }
+    }
+
+    var collection = (params['currentTab'] == 'Fellows') ? Fellows : Companies;
+    delete params['currentTab'];
+    var count = collection.find(params).count();
+
+    return resultsTitleString + ' ; Result Count = ' + count;
+  }
 });

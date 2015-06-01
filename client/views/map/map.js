@@ -1,5 +1,6 @@
 Cities = new Mongo.Collection('cities');
 var map;
+
 Tracker.autorun(function() {
   var citiesToCoords = {
     Baltimore: {latitude: 39.17, longitude: -76.61},
@@ -31,13 +32,15 @@ Tracker.autorun(function() {
     for (var year in city.fellowCount) {
       if (city.fellowCount.hasOwnProperty(year)) {
         var currentFellowCount = city.fellowCount[year];
-        fellowCount += currentFellowCount;
-        fellowText += '<br>' + year + ': ' + String(currentFellowCount);
+        if (currentFellowCount) {
+          fellowCount += currentFellowCount;
+          fellowText += '<br>' + year + ': ' + String(currentFellowCount);
+        }
       }
     }
 
     var radius = Session.get('activeParamsKey') === 'fellowsParams' ? fellowCount : city.companyCount;
-    radius = radius != 0 ? radius : ((citiesToCoords[name].isNew || name == 'Las Vegas') ? 2 : 10);
+    radius = radius ? Math.floor(radius / 2) + 1 : ((citiesToCoords[name].isNew || name == 'Las Vegas') ? 1 : 5);
     var radiusBy = radius != 0 ? Session.get('activeParamsKey') : 'default';
 
     bubbleData.push({
@@ -45,8 +48,8 @@ Tracker.autorun(function() {
       latitude: citiesToCoords[name].latitude,
       longitude: citiesToCoords[name].longitude,
       radius: radius,
+      fillKey: Session.get('highlightedCity') === name ? 'selected' : 'defaultFill',
       companyCount: city.companyCount,
-      opportunityCount: city.opportunityCount,
       fellowText: fellowText,
       radiusBy: radiusBy,
     });
@@ -54,11 +57,11 @@ Tracker.autorun(function() {
 
   if (map) {
     map.bubbles(bubbleData, {
-      popupTemplate: function(geo, data) {
+      popupTemplate: function (geo, data) {
         return '' +
           '<div class="hoverinfo">' +
             '<h3>' + data.name + '<h3>' +
-            '<p>Companies: ' + data.companyCount + '<br>Opportunities:' + data.opportunityCount + '</p>' +
+            '<p>Companies: ' + data.companyCount + '</p>' +
             '<p>Fellows:' + data.fellowText + '</p>' +
             '<p>Radius by ' + data.radiusBy + ': ' + data.radius + '</p>' +
           '</div>';
@@ -81,8 +84,15 @@ Template.map.onRendered(function() {
     scope: 'usa',
     fills: {
       VFA: 'blue',
+      selected: 'red',
       defaultFill: 'lightgray'
     },
     data: mapData
   });
+});
+
+Template.citySelector.events({
+  'change select[name="city"]': function(e) {
+    Session.set('highlightedCity', e.target.value);
+  },
 });
