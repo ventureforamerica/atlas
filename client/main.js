@@ -36,6 +36,10 @@ Template.body.events({
   'change select': function(e) {
     addToJSONParams(e.target.name, e.target.value);
   },
+  'click .datamaps-bubble': function(e) {
+    var bubbleInfo = JSON.parse(e.target.dataset.info);
+    addToJSONParams('city', bubbleInfo.city);
+  },
   'submit #search': function(e) {
     e.preventDefault();
     var query = $('#search-input').val().toLowerCase();

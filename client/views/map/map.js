@@ -46,7 +46,7 @@ Tracker.autorun(function() {
     var radiusBy = radius != 0 ? activeParamsKey : 'default';
 
     bubbleData.push({
-      name: name,
+      city: name,
       latitude: citiesToCoords[name].latitude,
       longitude: citiesToCoords[name].longitude,
       radius: radius,
@@ -62,7 +62,7 @@ Tracker.autorun(function() {
       popupTemplate: function (geo, data) {
         return '' +
           '<div class="hoverinfo">' +
-            '<h3>' + data.name + '<h3>' +
+            '<h3>' + data.city + '<h3>' +
             '<p>Companies: ' + data.companyCount + '</p>' +
             '<p>Fellows:' + data.fellowText + '</p>' +
             '<p>Radius by ' + data.radiusBy + ': ' + data.radius + '</p>' +
