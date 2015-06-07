@@ -1,7 +1,7 @@
+Companies = new Mongo.Collection('companies');
 Template.companiesList.helpers({
   companies: function () {
-    var params = JSON.parse(Session.get('companiesParams'));
-    delete params['currentTab'];
+    var params = JSON.parse(Session.get('companiesParams') || '{}');
     return Companies.find(params);
   }
 });

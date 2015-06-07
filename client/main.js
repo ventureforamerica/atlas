@@ -3,10 +3,9 @@ Meteor.subscribe('companies');
 Meteor.subscribe('cities');
 
 Template.body.created = function() {
-  Session.set('activeParamsKey', 'fellowsParams');
-  Session.set('highlightedCity', '');
-  Session.set('fellowsParams', JSON.stringify({currentTab: 'Fellows'}));
-  Session.set('companiesParams', JSON.stringify({currentTab: 'Companies'}));
+  Session.setDefault('activeParamsKey', 'fellowsParams');
+  Session.setDefault('fellowsParams', '{}');
+  Session.setDefault('companiesParams', '{}');
 };
 
 function addToJSONParams(key, value) {
@@ -47,8 +46,10 @@ Template.body.events({
 
 Template.body.helpers({
   resultsTitle: function() {
-    var params = JSON.parse(Session.get(Session.get('activeParamsKey')));
-    var resultsTitleString = 'Query = ';
+    var activeParamsKey = Session.get('activeParamsKey') || 'fellowsParams';
+    var params = JSON.parse(Session.get(activeParamsKey));
+    var collection = (activeParamsKey == 'fellowsParams') ? Fellows : Companies;
+    var resultsTitleString = 'Query = ' + collection._name.charAt(0).toUpperCase() + collection._name.slice(1) + ' ';
 
     for (var key in params) {
       if (params.hasOwnProperty(key)) {
@@ -56,8 +57,6 @@ Template.body.helpers({
       }
     }
 
-    var collection = (params['currentTab'] == 'Fellows') ? Fellows : Companies;
-    delete params['currentTab'];
     var count = collection.find(params).count();
 
     return resultsTitleString + ' ; Result Count = ' + count;
