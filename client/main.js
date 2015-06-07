@@ -40,11 +40,9 @@ Template.body.events({
     var activeParamsKey = Session.get('activeParamsKey');
     var activeSelectors = activeParamsKey.replace('Params', '-selectors');
 
-    var bubbleInfo = JSON.parse(e.target.dataset.info);
+    var bubbleInfo = $(e.target).data('info');
     var city = bubbleInfo.city;
-console.log(activeSelectors);
-    console.log($('#' + activeSelectors));
-    console.log($('#' + activeSelectors).find('select[name="city"]'));
+
     $('#' + activeSelectors).find('select[name="city"]').val(city);
     addToJSONParams('city', city);
   },
