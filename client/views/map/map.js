@@ -50,7 +50,7 @@ Tracker.autorun(function() {
       latitude: citiesToCoords[name].latitude,
       longitude: citiesToCoords[name].longitude,
       radius: radius,
-      fillKey: activeParams.hasOwnProperty('city') && activeParams['city'] === name ? 'selected' : 'defaultFill',
+      fillKey: activeParams.hasOwnProperty('city') && activeParams.city === name ? 'selected' : 'defaultFill',
       companyCount: city.companyCount,
       fellowText: fellowText,
       radiusBy: radiusBy,

@@ -37,8 +37,16 @@ Template.body.events({
     addToJSONParams(e.target.name, e.target.value);
   },
   'click .datamaps-bubble': function(e) {
+    var activeParamsKey = Session.get('activeParamsKey');
+    var activeSelectors = activeParamsKey.replace('Params', '-selectors');
+
     var bubbleInfo = JSON.parse(e.target.dataset.info);
-    addToJSONParams('city', bubbleInfo.city);
+    var city = bubbleInfo.city;
+console.log(activeSelectors);
+    console.log($('#' + activeSelectors));
+    console.log($('#' + activeSelectors).find('select[name="city"]'));
+    $('#' + activeSelectors).find('select[name="city"]').val(city);
+    addToJSONParams('city', city);
   },
   'submit #search': function(e) {
     e.preventDefault();
