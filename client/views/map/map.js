@@ -50,7 +50,7 @@ Tracker.autorun(function() {
       latitude: citiesToCoords[name].latitude,
       longitude: citiesToCoords[name].longitude,
       radius: radius,
-      fillKey: activeParams.hasOwnProperty('city') && activeParams.city === name ? 'selected' : 'defaultFill',
+      fillKey: activeParams.hasOwnProperty('city') && activeParams.city === name ? 'selected' : 'VFA',
       companyCount: city.companyCount,
       fellowText: fellowText,
       radiusBy: radiusBy,
@@ -65,7 +65,6 @@ Tracker.autorun(function() {
             '<h3>' + data.city + '<h3>' +
             '<p>Companies: ' + data.companyCount + '</p>' +
             '<p>Fellows:' + data.fellowText + '</p>' +
-            '<p>Radius by ' + data.radiusBy + ': ' + data.radius + '</p>' +
           '</div>';
       }
     });
@@ -73,22 +72,14 @@ Tracker.autorun(function() {
 });
 
 Template.map.onRendered(function() {
-  var vfaStates = [
-    'AL', 'CO', 'FL', 'IN', 'LA', 'MD',
-    'MI', 'MO', 'NC', 'NV', 'OH', 'PA',
-    'RI', 'TN', 'TX',
-  ];
-  var mapData = {};
-  $.each(vfaStates, function(i, state) { mapData[state] = {fillKey: 'VFA'}; });
-
   map = new Datamap({
     element: $('#map')[0],
     scope: 'usa',
     fills: {
-      VFA: 'blue',
-      selected: 'red',
-      defaultFill: 'lightgray'
+      VFA: 'rgb(39,75,114)', // vfa blue
+      selected: 'rgb(202,62,62)', // vfa red
+      defaultFill: 'lightgrey',
     },
-    data: mapData
+    data: {}
   });
 });
