@@ -1,6 +1,5 @@
 #selectors {
-  height: 700px;
-  border: 1px solid black;
+  background-color: rgb(245,245,245); /* vfa grey */
 }
 #selectors-nav {
   padding-left: 0;
@@ -11,16 +10,19 @@
 }
 
 #selectors[data-magellan-expedition], #selectors[data-magellan-expedition-clone] {
-  min-width: 250px;
-  width: 250px;
+  min-width: inherit;
+  height: 100%;
   left: inherit;
   padding: 0 15px;
 }
-#selectors[data-magellan-expedition] {
-  top: 20px !important;
+#selectors[data-magellan-expedition], #map-search-results {
+  top: 52px !important;
 }
 #selectors[data-magellan-expedition-clone] {
   visibility: hidden;
+}
+.small-3.fixed {
+  width: 25%;
 }
 
 #map {
@@ -35,7 +37,7 @@
   margin-bottom: 5px;
 }
 .summary {
-  border-left: 1px solid blue;
+  border-left: 1px solid rgb(39,75,114); /* vfa blue */
 }
 
 header .logo {
@@ -46,5 +48,14 @@ header .logo {
 }
 
 form select {
-  padding: 0px;
+  padding: 0px !important;
+}
+
+#map-search-results {
+  float: left;
+}
+
+.main {
+  top: 52px;
+  height: 100%;
 }

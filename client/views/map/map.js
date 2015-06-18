@@ -78,7 +78,7 @@ Template.map.onRendered(function() {
     fills: {
       VFA: 'rgb(39,75,114)', // vfa blue
       selected: 'rgb(202,62,62)', // vfa red
-      defaultFill: 'lightgrey',
+      defaultFill: 'rgb(245,245,245)', // vfa grey
     },
     data: {}
   });
