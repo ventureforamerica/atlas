@@ -1,21 +1,22 @@
+/*
+rgb(39,75,114); // vfa blue
+rgb(202,62,62); // vfa red
+rgb(245,245,245); // vfa grey
+*/
+#under-nav {
+ height: 52px;
+}
 #selectors {
   background-color: rgb(245,245,245); /* vfa grey */
+  overflow-y: auto;
 }
-#selectors-nav {
-  padding-left: 0;
-  padding-right: 0;
-}
-#selectors dl dd a {
-  padding: 3px 9px;
-}
-
 #selectors[data-magellan-expedition], #selectors[data-magellan-expedition-clone] {
   min-width: inherit;
   height: 100%;
   left: inherit;
   padding: 0 15px;
 }
-#selectors[data-magellan-expedition], #map-search-results {
+#selectors[data-magellan-expedition].fixed {
   top: 52px !important;
 }
 #selectors[data-magellan-expedition-clone] {
@@ -47,10 +48,6 @@ header .logo {
   position: absolute;
 }
 
-form select {
-  padding: 0px !important;
-}
-
 #map-search-results {
   float: left;
 }
@@ -58,4 +55,9 @@ form select {
 .main {
   top: 52px;
   height: 100%;
+}
+
+.selector li.selected {
+  font-weight: bold;
+  text-decoration: underline;
 }

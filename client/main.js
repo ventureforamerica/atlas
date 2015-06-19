@@ -9,6 +9,10 @@ Template.body.created = function() {
 };
 
 function addToJSONParams(key, value) {
+  if (key === "domain") {
+    return;
+  }
+
   var activeParamsKey = Session.get('activeParamsKey');
   var sessionParams = JSON.parse(Session.get(activeParamsKey));
 
@@ -23,18 +27,25 @@ function addToJSONParams(key, value) {
   console.log('set ' + activeParamsKey + ' to ', JSON.parse(Session.get(activeParamsKey)));
 }
 
+function toggleSelected($element) {
+  $element.siblings('.selected').removeClass('selected');
+  $element.addClass('selected');
+}
+
 Template.body.events({
-  'click .tab-title a': function(e) {
-    var kind = e.target.id.split('-')[0];
+  'click #domain li': function(e) {
+    var kind = $(e.target).text();
     var paramsKey = kind + 'Params';
-    var list = kind + 'List';
 
     Session.set('activeParamsKey', paramsKey);
-    $('#results').find('.active').removeClass('active').toggle();
-    $('#' + list).addClass('active').toggle();
   },
-  'change select': function(e) {
-    addToJSONParams(e.target.name, e.target.value);
+  'click .selector .content li': function(e) {
+    var $this = $(e.target);
+    var key = $this.parents('.content').attr('id');
+    var value = $this.text();
+
+    addToJSONParams(key, value);
+    toggleSelected($this);
   },
   'click .datamaps-bubble': function(e) {
     var activeParamsKey = Session.get('activeParamsKey');
@@ -42,8 +53,8 @@ Template.body.events({
 
     var bubbleInfo = $(e.target).data('info');
     var city = bubbleInfo.city;
-
-    $('#' + activeSelectors).find('select[name="city"]').val(city);
+    $('.selector .content li.selected').removeClass('selected');
+    toggleSelected($('#' + activeSelectors).find('#city li[data-city="' + city + '"]'));
     addToJSONParams('city', city);
   },
   'submit #search': function(e) {
@@ -55,6 +66,9 @@ Template.body.events({
 });
 
 Template.body.helpers({
+  onFellowsTab: function() {
+    return Session.get('activeParamsKey') === 'fellowsParams';
+  },
   resultsTitle: function() {
     var activeParamsKey = Session.get('activeParamsKey') || 'fellowsParams';
     var params = JSON.parse(Session.get(activeParamsKey));

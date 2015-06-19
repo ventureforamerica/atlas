@@ -1,8 +1,9 @@
 <template name="citySelector">
-<select name="city">
-  <option value="">All Cities</option>
+{{#accordionItem id="city" title="VFA City"}}
+  <ul>
   {{#each cities}}
-  <option value="{{.}}">{{.}}</option>
+    <li data-city="{{.}}">{{.}}</li>
   {{/each}}
-</select>
+  </ul>
+{{/accordionItem}}
 </template>

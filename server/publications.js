@@ -9,6 +9,7 @@ function publishAPIData(collectionName) {
 
       }
     };
+
     try {
       console.log('Retrieving data from ' + url);
 

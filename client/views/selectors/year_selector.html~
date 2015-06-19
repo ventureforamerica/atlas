@@ -1,0 +1,9 @@
+<template name="yearSelector">
+{{#accordionItem id="fellowYear" title="VFA Year"}}
+<ul>
+{{#each years}}
+  <li>{{.}}</li>
+{{/each}}
+</ul>
+{{/accordionItem}}
+</template>
