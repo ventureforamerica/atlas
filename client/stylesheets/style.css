@@ -118,6 +118,10 @@ header .logo {
 .item-header a {
   color: white;
 }
+.item-info .summary {
+  height: calc(150px - 32.1818px);
+  overflow-y: auto;
+}
 
 /* TODO: remove once count updates to match filter */
 .selector .content li .count {
