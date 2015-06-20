@@ -104,7 +104,7 @@ header .logo {
 .image-container {
   height: 100%;
 }
-.fellow .image {
+.fellow .image, .company .image {
   height: 90%;
   margin-top: 5%;
   background-size: 100% !important;
@@ -112,8 +112,11 @@ header .logo {
   border: 2px solid red;
   border-radius: 50%;
 }
-.company-name {
+.fellow .company-name {
   margin-bottom: 10px;
+}
+.item-header a {
+  color: white;
 }
 
 /* TODO: remove once count updates to match filter */

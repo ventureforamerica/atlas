@@ -1,12 +1,23 @@
 <template name="company">
 <div class="row company" id="company-{{id}}">
-  <div class="small-2 columns image"><img src="http://match.ventureforamerica.org{{logoPath}}"></div>
-  <div class="small-2 columns info">
-    <a href="{{url}}" target="_blank">{{name}}</a><br>
-    {{city}}
+  <div class="small-2 columns image-container">
+    <div class="row image-header">.</div>
+    <div class="image" style="background: url(http://match.ventureforamerica.org{{logoPath}})"></div>
   </div>
-  <div class="small-8 columns summary">
-    {{bio}}
+  <div class="small-10 columns">
+    <div class="row item-header">
+      <div class="small-4 columns name">
+        <a href="{{url}}" target="_blank">{{name}}</a>
+      </div>
+      <div class="small-8 columns text-right city">
+        {{city}}
+      </div>
+    </div>
+    <div class="row item-info">
+      <div class="small-12 columns summary">
+        {{bio}}
+      </div>
+    </div>
   </div>
 </div>
 </template>
