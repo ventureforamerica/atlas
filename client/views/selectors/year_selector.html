@@ -2,7 +2,10 @@
 {{#accordionItem id="fellowYear" title="VFA Year"}}
   <ul>
   {{#each years}}
-    <li>{{.}}</li>
+    <li data-fellowYear="{{.}}">
+      <span class="year">{{.}}</span>
+      <span class="count right">{{.}}</span>
+    </li>
   {{/each}}
   </ul>
 {{/accordionItem}}

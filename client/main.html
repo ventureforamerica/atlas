@@ -11,21 +11,19 @@
 <div class="small-3 columns" id="selectors" data-magellan-expedition="fixed">
   {{#accordionItem id="domain" title="Select Domain"}}
   <ul>
-    <li class="selected">fellows</li>
-    <li>companies</li>
+    <li class="{{#if onFellowsTab}}selected{{/if}}">fellows</li>
+    <li class="{{#unless onFellowsTab}}selected{{/unless}}">companies</li>
   </ul>
   {{/accordionItem}}
   
-  {{#if onFellowsTab}}
-  <div id="fellows-selectors">
+  <div id="fellows-selectors" class="selector-tab {{#if onFellowsTab}}active{{/if}}">
     {{> yearSelector}}
     {{> citySelector}}
   </div>
-  {{else}}
-  <div id="companies-selectors">
+  <div id="companies-selectors" class="selector-tab {{#unless onFellowsTab}}active{{/unless}}">
+    {{> industrySelector}}
     {{> citySelector}}
   </div>
-  {{/if}}
 </div><!-- /#selectors -->
 
 <div class="small-9 columns" id="map-search-results">

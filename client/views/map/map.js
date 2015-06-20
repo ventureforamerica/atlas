@@ -80,6 +80,11 @@ Template.map.onRendered(function() {
       selected: 'rgb(202,62,62)', // vfa red
       defaultFill: 'rgb(245,245,245)', // vfa grey
     },
-    data: {}
+    geographyConfig: {
+      highlightOnHover: false,
+      popupTemplate: function(geography, data) {
+        return '';
+      },
+    }
   });
 });

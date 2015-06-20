@@ -1,18 +1,35 @@
-/*
-rgb(39,75,114); // vfa blue
-rgb(202,62,62); // vfa red
-rgb(245,245,245); // vfa grey
-*/
-#under-nav {
- height: 52px;
+.vfa-colors {
+  color: rgb(39,75,114); /* vfa blue */
+  color: rgb(202,62,62); /* vfa red */
+  color: rgb(245,245,245); /* vfa grey */
 }
+
+/* Nav Bar */
+header .logo {
+  top: 2px;
+  left: 2px;
+  background-position: 0 -67px !important;
+  position: absolute;
+}
+#under-nav {
+  height: 52px;
+}
+
+/* Body Below Nav Bar */
+.main {
+  height: 100%;
+}
+
+/* Left Side - Selectors */
+/* Entire Bar */
 #selectors {
   background-color: rgb(245,245,245); /* vfa grey */
   overflow-y: auto;
+  text-transform: uppercase;
 }
 #selectors[data-magellan-expedition], #selectors[data-magellan-expedition-clone] {
   min-width: inherit;
-  height: 100%;
+  height: calc(100% - 52px);
   left: inherit;
   padding: 0 15px;
 }
@@ -22,42 +39,84 @@ rgb(245,245,245); // vfa grey
 #selectors[data-magellan-expedition-clone] {
   visibility: hidden;
 }
+.selector-tab {
+  display: none;
+}
+.selector-tab.active {
+  display: block;
+}
 .small-3.fixed {
   width: 25%;
 }
+/* Individual Selectors */
+.accordion.selector .accordion-navigation>a {
+  border: 2px solid rgb(39,75,114); /* vfa blue */
+  margin-top: 20px;
+}
+.accordion.selector .accordion-navigation>a, .accordion.selector .accordion-navigation>.content {
+  background-color: rgb(245,245,245); /* vfa grey */
+}
+.selector .content {
+  padding-bottom: 0;
+}
+.selector .content ul {
+  margin-top: -10px;
+}
+.selector .content li {
+  color: rgb(39,75,114); /* vfa blue */
+  padding: 0 10px;
+  margin-left: -15px;
+  display: block;
+}
+.selector .content li.selected {
+  background-color: darkgray;
+  color: white;
+}
 
-#map {
-  height: 500px;
-}
-#results {
-  overflow-x: auto;
-}
-
-.fellow.row, .company.row {
-  border: 1px solid rgb(39,75,114); /* vfa blue */
-  margin-bottom: 5px;
-}
-.summary {
-  border-left: 1px solid rgb(39,75,114); /* vfa blue */
-}
-
-header .logo {
-  top: 2px;
-  left: 2px;
-  background-position: 0 -67px !important;
-  position: absolute;
-}
-
+/* Right Side - Map and Results */
+/* Entire Side */
 #map-search-results {
   float: left;
 }
-
-.main {
-  top: 52px;
+#map {
+  height: 500px;
+}
+.hoverinfo {
+  opacity: .85;
+}
+/* Results */
+.fellow.row, .company.row {
+  border: 2px solid rgb(202,62,62); /* vfa red */
+  height: 150px;
+  margin-bottom: 20px !important;
+}
+.item-header, .image-header {
+  padding: 5px 0;
+  background-color: rgb(202,62,62); /* vfa red */
+  color: white;
+}
+.image-header {
+  color: rgb(202,62,62); /* vfa red */
+  width: 100% !important;
+  position: absolute;
+  z-index: -1;
+}
+.image-container {
   height: 100%;
 }
+.fellow .image {
+  height: 90%;
+  margin-top: 5%;
+  background-size: 100% !important;
+  background-repeat: no-repeat !important;
+  border: 2px solid red;
+  border-radius: 50%;
+}
+.company-name {
+  margin-bottom: 10px;
+}
 
-.selector li.selected {
-  font-weight: bold;
-  text-decoration: underline;
+/* TODO: remove once count updates to match filter */
+.selector .content li .count {
+  display: none;
 }

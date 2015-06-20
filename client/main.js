@@ -40,12 +40,12 @@ Template.body.events({
     Session.set('activeParamsKey', paramsKey);
   },
   'click .selector .content li': function(e) {
-    var $this = $(e.target);
+    var $this = $(e.currentTarget);
     var key = $this.parents('.content').attr('id');
-    var value = $this.text();
+    var value = $this.data(key.toLowerCase());
 
-    addToJSONParams(key, value);
     toggleSelected($this);
+    addToJSONParams(key, value);
   },
   'click .datamaps-bubble': function(e) {
     var activeParamsKey = Session.get('activeParamsKey');
@@ -53,7 +53,7 @@ Template.body.events({
 
     var bubbleInfo = $(e.target).data('info');
     var city = bubbleInfo.city;
-    $('.selector .content li.selected').removeClass('selected');
+
     toggleSelected($('#' + activeSelectors).find('#city li[data-city="' + city + '"]'));
     addToJSONParams('city', city);
   },
@@ -61,7 +61,8 @@ Template.body.events({
     e.preventDefault();
     var query = $('#search-input').val().toLowerCase();
 
-    addToJSONParams('allText', {$regex: query});
+    var value = query ? {$regex: query} : '';
+    addToJSONParams('allText', value);
   },
 });
 
@@ -77,7 +78,12 @@ Template.body.helpers({
 
     for (var key in params) {
       if (params.hasOwnProperty(key)) {
-        resultsTitleString += params[key] + ' ';
+        if (key === 'allText') {
+          resultsTitleString += params.allText.$regex;
+	}
+	else {
+          resultsTitleString += params[key] + ' ';
+	}
       }
     }
 

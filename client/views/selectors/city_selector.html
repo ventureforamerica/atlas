@@ -2,7 +2,10 @@
 {{#accordionItem id="city" title="VFA City"}}
   <ul>
   {{#each cities}}
-    <li data-city="{{.}}">{{.}}</li>
+    <li data-city="{{name}}">
+      <span class="name">{{name}}</span>
+      <span class="count right">{{count}}</span>
+    </li>
   {{/each}}
   </ul>
 {{/accordionItem}}
