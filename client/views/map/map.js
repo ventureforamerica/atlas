@@ -1,6 +1,9 @@
 Cities = new Mongo.Collection('cities');
 var map;
+
 Tracker.autorun(function() {
+  var activeParamsKey = Session.get('activeParamsKey') || 'fellowsParams';
+  var activeParams = JSON.parse(Session.get(activeParamsKey) || '{}');
   var citiesToCoords = {
     Baltimore: {latitude: 39.17, longitude: -76.61},
     Birmingham: {latitude: 33.52, longitude: -86.81, isNew: true},
@@ -31,55 +34,57 @@ Tracker.autorun(function() {
     for (var year in city.fellowCount) {
       if (city.fellowCount.hasOwnProperty(year)) {
         var currentFellowCount = city.fellowCount[year];
-        fellowCount += currentFellowCount;
-        fellowText += '<br>' + year + ': ' + String(currentFellowCount);
+        if (currentFellowCount) {
+          fellowCount += currentFellowCount;
+          fellowText += '<br>' + year + ': ' + String(currentFellowCount);
+        }
       }
     }
 
-    var radius = Session.get('activeParamsKey') === 'fellowsParams' ? fellowCount : city.companyCount;
-    radius = radius != 0 ? radius : ((citiesToCoords[name].isNew || name == 'Las Vegas') ? 2 : 10);
-    var radiusBy = radius != 0 ? Session.get('activeParamsKey') : 'default';
+    var radius = activeParamsKey === 'fellowsParams' ? fellowCount : city.companyCount;
+    radius = radius ? Math.floor(radius / 2) + 1 : ((citiesToCoords[name].isNew || name == 'Las Vegas') ? 1 : 5);
+    var radiusBy = radius != 0 ? activeParamsKey : 'default';
 
     bubbleData.push({
-      name: name,
+      city: name,
       latitude: citiesToCoords[name].latitude,
       longitude: citiesToCoords[name].longitude,
       radius: radius,
+      fillKey: activeParams.hasOwnProperty('city') && activeParams.city === name ? 'selected' : 'VFA',
       companyCount: city.companyCount,
-      opportunityCount: city.opportunityCount,
       fellowText: fellowText,
       radiusBy: radiusBy,
     });
   });
 
-  if (map) map.bubbles(bubbleData, {
-    popupTemplate: function(geo, data) {
-      return '<div class="hoverinfo">' +
-        '<h3>' + data.name + '<h3>' +
-        '<p>Companies: ' + data.companyCount + '<br>Opportunities:' + data.opportunityCount + '</p>' +
-        '<p>Fellows:' + data.fellowText + '</p>' +
-        '<p>Radius by ' + data.radiusBy + ': ' + data.radius + '</p>' +
-      '</div>';
-    }
-  });
+  if (map) {
+    map.bubbles(bubbleData, {
+      popupTemplate: function (geo, data) {
+        return '' +
+          '<div class="hoverinfo">' +
+            '<h3>' + data.city + '<h3>' +
+            '<p>Companies: ' + data.companyCount + '</p>' +
+            '<p>Fellows:' + data.fellowText + '</p>' +
+          '</div>';
+      }
+    });
+  }
 });
 
 Template.map.onRendered(function() {
-  var vfaStates = [
-    'AL', 'CO', 'FL', 'IN', 'LA', 'MD',
-    'MI', 'MO', 'NC', 'NV', 'OH', 'PA',
-    'RI', 'TN', 'TX',
-  ];
-  var mapData = {};
-  $.each(vfaStates, function(i, state) { mapData[state] = {fillKey: 'VFA'}; });
-
   map = new Datamap({
     element: $('#map')[0],
     scope: 'usa',
     fills: {
-      VFA: 'blue',
-      defaultFill: 'lightgray'
+      VFA: 'rgb(39,75,114)', // vfa blue
+      selected: 'rgb(202,62,62)', // vfa red
+      defaultFill: 'rgb(245,245,245)', // vfa grey
     },
-    data: mapData
+    geographyConfig: {
+      highlightOnHover: false,
+      popupTemplate: function(geography, data) {
+        return '';
+      },
+    }
   });
 });

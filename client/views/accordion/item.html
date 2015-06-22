@@ -1,0 +1,10 @@
+<template name="accordionItem">
+<ul class="row accordion selector" data-accordion>
+  <li class="accordion-navigation">
+    <a href="#{{id}}">{{title}}</a>
+    <div id="{{id}}" class="content">
+      {{> UI.contentBlock}}
+    </div>
+  </li>
+</ul>
+</template>

@@ -3,13 +3,17 @@ Meteor.subscribe('companies');
 Meteor.subscribe('cities');
 
 Template.body.created = function() {
-  Session.set('activeParamsKey', 'fellowsParams');
-  Session.set('fellowsParams', JSON.stringify({}));
-  Session.set('companiesParams', JSON.stringify({}));
+  Session.setDefault('activeParamsKey', 'fellowsParams');
+  Session.setDefault('fellowsParams', '{}');
+  Session.setDefault('companiesParams', '{}');
 };
 
 function addToJSONParams(key, value) {
-  var activeParamsKey = Session.get('activeParamsKey') + 'Params';
+  if (key === "domain") {
+    return;
+  }
+
+  var activeParamsKey = Session.get('activeParamsKey');
   var sessionParams = JSON.parse(Session.get(activeParamsKey));
 
   if (value) {
@@ -23,32 +27,72 @@ function addToJSONParams(key, value) {
   console.log('set ' + activeParamsKey + ' to ', JSON.parse(Session.get(activeParamsKey)));
 }
 
+function toggleSelected($element) {
+  $element.siblings('.selected').removeClass('selected');
+  $element.addClass('selected');
+}
+
 Template.body.events({
-  'click .tab-title a': function(e) {
-    var kind = e.target.id.split('-')[0];
+  'click #domain li': function(e) {
+    var kind = $(e.target).text();
     var paramsKey = kind + 'Params';
-    var list = kind + 'List';
 
     Session.set('activeParamsKey', paramsKey);
-    $('#results').find('.active').removeClass('active').toggle();
-    $('#' + list).addClass('active').toggle();
   },
-  'change select': function(e) {
-    addToJSONParams(e.target.name, e.target.value);
+  'click .selector .content li': function(e) {
+    var $this = $(e.currentTarget);
+    var key = $this.parents('.content').attr('id');
+    var value = $this.data(key.toLowerCase());
+
+    toggleSelected($this);
+    addToJSONParams(key, value.toString());
   },
-  //'change select[name="city"]': function(e) {
-  //  var city = e.target.value;
-  //  map.bubbles([{
-  //    name: city,
-  //    latitude: citiesToCoords[city].latitude,
-  //    longitude: citiesToCoords[city].longitude,
-  //    radius: 20,
-  //  }]);
-  //},
+  'click .datamaps-bubble': function(e) {
+    var activeParamsKey = Session.get('activeParamsKey');
+    var activeSelectors = activeParamsKey.replace('Params', '-selectors');
+
+    var bubbleInfo = $(e.target).data('info');
+    var city = bubbleInfo.city;
+
+    toggleSelected($('#' + activeSelectors).find('#city li[data-city="' + city + '"]'));
+    addToJSONParams('city', city);
+  },
+  'click #clear-search': function() {
+    $('#search-input').val('');
+    $('#search').submit();
+  },
   'submit #search': function(e) {
     e.preventDefault();
     var query = $('#search-input').val().toLowerCase();
 
-    addToJSONParams('allText', {$regex: query});
+    var value = query ? {$regex: query} : '';
+    addToJSONParams('allText', value);
   },
+});
+
+Template.body.helpers({
+  isCurrentDomain: function(domain) {
+    return Session.get('activeParamsKey') === domain + 'Params';
+  },
+  resultsTitle: function() {
+    var activeParamsKey = Session.get('activeParamsKey') || 'fellowsParams';
+    var params = JSON.parse(Session.get(activeParamsKey));
+    var collection = (activeParamsKey == 'fellowsParams') ? Fellows : Companies;
+    var resultsTitleString = 'Query = ' + collection._name.charAt(0).toUpperCase() + collection._name.slice(1) + ' ';
+
+    for (var key in params) {
+      if (params.hasOwnProperty(key)) {
+        if (key === 'allText') {
+          resultsTitleString += params.allText.$regex + ' ';
+	}
+	else {
+          resultsTitleString += params[key] + ' ';
+	}
+      }
+    }
+
+    var count = collection.find(params).count();
+
+    return resultsTitleString + ' ; Result Count = ' + count;
+  }
 });
