@@ -11,8 +11,8 @@
 <div class="small-3 columns" id="selectors" data-magellan-expedition="fixed">
   {{#accordionItem id="domain" title="Select Domain"}}
   <ul>
-    <li class="{{#if onFellowsTab}}selected{{/if}}">fellows</li>
-    <li class="{{#unless onFellowsTab}}selected{{/unless}}">companies</li>
+    <li class="{{#if isCurrentDomain 'fellows'}}selected{{/if}}">fellows</li>
+    <li class="{{#if isCurrentDomain 'companies'}}selected{{/if}}">companies</li>
   </ul>
   {{/accordionItem}}
   
