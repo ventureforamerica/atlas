@@ -84,6 +84,14 @@ header .logo {
 .hoverinfo {
   opacity: .85;
 }
+#search-input {
+  border: 2px solid rgb(39,75,114); /* vfa blue */
+}
+#clear-search {
+  position: absolute;
+  top: 6px;
+  right: 30px;
+}
 /* Results */
 .fellow.row, .company.row {
   border: 2px solid rgb(202,62,62); /* vfa red */
@@ -119,8 +127,11 @@ header .logo {
   color: white;
 }
 .item-info .summary {
-  height: calc(150px - 32.1818px);
+  height: calc(150px - 33.1818px);
   overflow-y: auto;
+}
+.school, .company-name {
+  font-weight: bold;
 }
 
 /* TODO: remove once count updates to match filter */

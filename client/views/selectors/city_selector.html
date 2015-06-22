@@ -1,6 +1,10 @@
 <template name="citySelector">
 {{#accordionItem id="city" title="VFA City"}}
   <ul>
+    <li data-city="">
+      <span class="name">All</span>
+      <span class="count right"></span>
+    </li>
   {{#each cities}}
     <li data-city="{{name}}">
       <span class="name">{{name}}</span>

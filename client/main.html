@@ -16,11 +16,11 @@
   </ul>
   {{/accordionItem}}
   
-  <div id="fellows-selectors" class="selector-tab {{#if onFellowsTab}}active{{/if}}">
+  <div id="fellows-selectors" class="selector-tab {{#if isCurrentDomain 'fellows'}}active{{/if}}">
     {{> yearSelector}}
     {{> citySelector}}
   </div>
-  <div id="companies-selectors" class="selector-tab {{#unless onFellowsTab}}active{{/unless}}">
+  <div id="companies-selectors" class="selector-tab {{#if isCurrentDomain 'companies'}}active{{/if}}">
     {{> industrySelector}}
     {{> citySelector}}
   </div>
@@ -39,6 +39,7 @@
     <form id="search">
       <div class="small-10 columns">
         <input type="text" name="search" id="search-input" placeholder="Search">
+        <span id="clear-search">X</span>
       </div>
       <div class="small-2 columns">
         <button class="button postfix">Search</button>
@@ -47,10 +48,12 @@
   </div>
   <div class="row" id="results">
     <div class="small-12 columns">
-    {{#if onFellowsTab}}
+    {{#if isCurrentDomain 'fellows'}}
       {{> fellowsList}}
     {{else}}
-      {{> companiesList}}
+      {{#if isCurrentDomain 'companies'}}
+        {{> companiesList}}
+      {{/if}}
     {{/if}}
     </div>
   </div>

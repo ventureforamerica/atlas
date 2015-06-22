@@ -45,7 +45,7 @@ Template.body.events({
     var value = $this.data(key.toLowerCase());
 
     toggleSelected($this);
-    addToJSONParams(key, value);
+    addToJSONParams(key, value.toString());
   },
   'click .datamaps-bubble': function(e) {
     var activeParamsKey = Session.get('activeParamsKey');
@@ -57,6 +57,10 @@ Template.body.events({
     toggleSelected($('#' + activeSelectors).find('#city li[data-city="' + city + '"]'));
     addToJSONParams('city', city);
   },
+  'click #clear-search': function() {
+    $('#search-input').val('');
+    $('#search').submit();
+  },
   'submit #search': function(e) {
     e.preventDefault();
     var query = $('#search-input').val().toLowerCase();
@@ -67,8 +71,8 @@ Template.body.events({
 });
 
 Template.body.helpers({
-  onFellowsTab: function() {
-    return Session.get('activeParamsKey') === 'fellowsParams';
+  isCurrentDomain: function(domain) {
+    return Session.get('activeParamsKey') === domain + 'Params';
   },
   resultsTitle: function() {
     var activeParamsKey = Session.get('activeParamsKey') || 'fellowsParams';
@@ -79,7 +83,7 @@ Template.body.helpers({
     for (var key in params) {
       if (params.hasOwnProperty(key)) {
         if (key === 'allText') {
-          resultsTitleString += params.allText.$regex;
+          resultsTitleString += params.allText.$regex + ' ';
 	}
 	else {
           resultsTitleString += params[key] + ' ';

@@ -1,6 +1,10 @@
 <template name="yearSelector">
 {{#accordionItem id="fellowYear" title="VFA Year"}}
   <ul>
+    <li data-fellowYear="">
+      <span class="name">All</span>
+      <span class="count right"></span>
+    </li>
   {{#each years}}
     <li data-fellowYear="{{.}}">
       <span class="year">{{.}}</span>
