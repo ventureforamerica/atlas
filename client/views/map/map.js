@@ -28,6 +28,9 @@ Tracker.autorun(function() {
   var cities = Cities.find().fetch();
   var bubbleData = [];
   $.each(cities, function(i, city) {
+    if (! citiesToCoords[city.name]) {
+      return;
+    }
     var name = city.name;
     var fellowCount = 0;
     var fellowText = '';
